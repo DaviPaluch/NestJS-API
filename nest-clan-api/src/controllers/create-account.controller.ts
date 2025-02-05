@@ -20,14 +20,15 @@ const createAccountBodySchema = z.object({
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
 @Controller('/accounts')
-@UsePipes(new ZodValidationPipe(createAccountBodySchema))
 export class CreateAccountController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
-  @HttpCode(201)
+  // @UsePipes(new ZodValidationPipe(createAccountBodySchema))
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, email, password } = createAccountBodySchema.parse(body)
+
+    console.log(body)
 
     const userWithSameEmail = await this.prisma.user.findUnique({
       where: {
