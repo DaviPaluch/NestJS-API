@@ -1,13 +1,17 @@
 import { Controller, Post, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
+import { CurrentUser } from 'src/auth/current-user-decorator'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { UserPayloadSchema } from 'src/auth/jwt.strategy'
 
 @Controller('/questions')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class CreateQuestionController {
   constructor() {}
 
   @Post()
-  async handle() {
+  async handle(@CurrentUser() user: UserPayloadSchema) {
+    console.log('user', user)
+
     return 'ok'
   }
 }

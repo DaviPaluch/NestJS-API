@@ -28,8 +28,6 @@ export class AuthenticateController {
   async handle(@Body() body: AuthenticateBodySchema, @Response() res) {
     const { email, password } = body
 
-    console.log('body', body)
-
     const user = await this.prisma.user.findUnique({
       where: {
         email,
