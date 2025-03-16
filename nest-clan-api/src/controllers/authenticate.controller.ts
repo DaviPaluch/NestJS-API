@@ -3,8 +3,8 @@ import {
   ConflictException,
   Controller,
   Post,
+  Response,
   UnauthorizedException,
-  UsePipes,
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcryptjs'
@@ -25,7 +25,7 @@ export class AuthenticateController {
 
   @Post()
   // @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handle(@Body() body: AuthenticateBodySchema) {
+  async handle(@Body() body: AuthenticateBodySchema, @Response() res) {
     const { email, password } = body
 
     console.log('body', body)
@@ -48,8 +48,8 @@ export class AuthenticateController {
 
     const accessToken = this.jwt.sign({ sub: user.id })
 
-    return {
-      access_token: accessToken,
-    }
+    return res
+      .setHeader('Authorization', `Bearer ${accessToken}`)
+      .json({ access_token: accessToken })
   }
 }
