@@ -2,7 +2,7 @@ import request from 'supertest'
 import { Test } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import { AppModule } from '@/app.module'
-import { afterAll, afterAll } from 'vitest'
+import { afterAll } from 'vitest'
 import { PrismaService } from '@/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
 
